@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: config-client
+  cloud:
+    config:
+      uri: ${SPRING_CONFIG_SERVER:http://localhost:8888}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,24 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: cloud-config-server
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: jdbc
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:dm.int}:5432/${DB_NAME:configuration}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+  cloud:
+    config:
+      server:
+        jdbc:
+          sql: SELECT name, default_value FROM ${DB_SCHEMA:develop}.parameter WHERE application=? and profile=? and label=?
+          order: 1
